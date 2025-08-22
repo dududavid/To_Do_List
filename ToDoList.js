@@ -19,7 +19,8 @@ app.post('/task', (req, res) => {
         return res.status(400).json({message: 'text is required'});
     }
     let id = nextID++;
-    let task = {id,text};
+    let isDone = false;
+    let task = {id,text,isDone};
     tasks[id] = task;
     res.status(200).json({message: 'task created'});
 });
@@ -46,13 +47,16 @@ app.patch('/tasks/:id', (req, res) => {
     if(tasks.length < id || id < 0 || tasks[id] == null){
         return res.status(400).json({message: 'not found'});
     }
-    let text = req.body.txt;
-    if (!text) {
-        return res.status(400).json({message: 'text is required'});
+    let isDone = req.body.isDone;
+    if(isDone != undefined){
+        tasks[id].isDone = isDone;
     }
-    let obj = tasks[id];
-    obj.text = text;
+    let text = req.body.txt;
+    if (text) {
+        tasks[id].text = text;
+    }
     res.json(tasks[id]);
 })
+
 
 app.listen(port, () => {console.log(`http://localhost:${port}`)})
