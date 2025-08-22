@@ -9,8 +9,6 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/ToDoList.html')
 });
 
-app.listen(port, () => {console.log(`http://localhost:${port}`)})
-
 app.get('/tasks', (req, res) => {
     res.status(200).json(tasks)
 });
@@ -25,3 +23,14 @@ app.post('/task', (req, res) => {
     tasks[id] = task;
     res.status(200).json({message: 'task created'});
 });
+
+app.delete('/tasks/:id', (req, res) => {
+    let id = req.params.id;
+    if(tasks.length < id || id < 0){
+        return res.status(400).json({message: 'not found'});
+    }
+    tasks[id] = null;
+    res.status(200).json({message: 'task removed'});
+})
+
+app.listen(port, () => {console.log(`http://localhost:${port}`)})
