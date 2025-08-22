@@ -26,11 +26,19 @@ app.post('/task', (req, res) => {
 
 app.delete('/tasks/:id', (req, res) => {
     let id = req.params.id;
-    if(tasks.length < id || id < 0){
+    if(tasks.length < id || id < 0 || tasks[id] == null){
         return res.status(400).json({message: 'not found'});
     }
     tasks[id] = null;
     res.status(200).json({message: 'task removed'});
+})
+
+app.get('/tasks/:id', (req, res) => {
+    let id = req.params.id;
+    if(tasks.length < id || id < 0 || tasks[id] == null){
+        return res.status(400).json({message: 'not found'});
+    }
+    res.json(tasks[id]);
 })
 
 app.listen(port, () => {console.log(`http://localhost:${port}`)})
