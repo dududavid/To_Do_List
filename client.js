@@ -4,7 +4,7 @@ async function getData(){
     console.log(data);
     createTable(data);
 };
-getData();
+
 
 function createTable(data) {
     let text = "";
@@ -14,8 +14,8 @@ function createTable(data) {
             text += `<td>${obj.id}</td>`;
             text += `<td>${obj.text}</td>`;
             text += `<td>${obj.isDone}</td>`;
-            text += `<td><button>edit</button></td>`;
-            text += `<td><button>delete</button></td>`;
+            text += `<td><button onclick="taskById(${obj.id})">✏️</button></td>`;
+            text += `<td><button onclick="deleteTask(${obj.id})">🗑️</button></td>`;
             text += `</tr>`
         }
     }
@@ -40,6 +40,31 @@ async function addTask(){
     }
 }
 
-async function deleteText(id){
-
+async function deleteTask(id){
+    try{
+        let res = await fetch(`/tasks/${id}`,{
+            method: 'DELETE'
+        });
+        getData();
+    }catch(err){
+        alert(err);
+    }
 }
+
+async function taskById(id){
+    try{
+        let res = await fetch(`/tasks/${id}`,{
+            method: 'GET'
+        });
+        let obj = await res.json();
+        document.getElementById('id').value = obj.id;
+        document.getElementById('txt').value = obj.text;
+
+    }catch(err){
+        alert(err);
+    }
+}
+
+
+
+getData();
