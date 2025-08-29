@@ -65,6 +65,31 @@ async function taskById(id){
     }
 }
 
+function addOrEdit(){
+    let id = document.getElementById('id').value;
+    if(id){
+        editTask(id);
+    }else {
+        addTask();
+    }
+}
+
+async function editTask(id){
+    try{
+        let txt = document.getElementById('txt').value;
+        let res = await fetch(`/tasks/${id}`,{
+            method: 'PATCH',
+            headers: {'Content-type': 'application/json'},
+            body: JSON.stringify({txt})
+        })
+        getData();
+        document.getElementById('id').value = "";
+        document.getElementById('txt').value = "";
+    }catch (err){
+        alert(err);
+    }
+}
+
 
 
 getData();

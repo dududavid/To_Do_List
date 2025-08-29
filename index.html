@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="./ToDoList.css">
 </head>
-<body>
+<body id="body">
 <h1>רשימת מטלות</h1>
 <div>
     <input type="hidden" id="id">
     <label for="txt">Text:</label>
     <br>
     <textarea id="txt" maxlength="50"></textarea>
-    <button onclick="addTask()">Send</button>
+    <button onclick="addOrEdit()">Send</button>
 </div>
 <hr>
-<table border="1">
+<table border="1" id="table">
     <thead>
     <tr>
         <th>id:</th>
