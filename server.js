@@ -1,19 +1,23 @@
 const express = require('express');
+const {static} = require("express");
 const app = express();
 const port = 3000;
+const path = require("path")
+app.use(express.json());
+app.use(express.static(path.join(__dirname)));
+
 const tasks = [];
 let nextID = 1;
-app.use(express.json())
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/ToDoList.html')
+    res.sendFile(__dirname + '/index.html')
 });
 
 app.get('/tasks', (req, res) => {
     res.status(200).json(tasks)
 });
 
-app.post('/task', (req, res) => {
+app.post('/tasks', (req, res) => {
     let text = req.body.txt;
     if (!text) {
         return res.status(400).json({message: 'text is required'});
@@ -55,6 +59,7 @@ app.patch('/tasks/:id', (req, res) => {
     if (text) {
         tasks[id].text = text;
     }
+
     res.json(tasks[id]);
 })
 

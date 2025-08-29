@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>רשימת מטלות</h1>
+<div>
+    <label for="txt">Text:</label>
+    <br>
+    <textarea id="txt" maxlength="50"></textarea>
+    <button onclick="addTask()">Send</button>
+</div>
+<hr>
+<table border="1">
+    <thead>
+    <tr>
+        <th>id:</th>
+        <th>task:</th>
+        <th>done:</th>
+        <th>edit</th>
+        <th>delete</th>
+    </tr>
+    </thead>
+    <tbody id="myTable"></tbody>
+</table>
+<script src="client.js"></script>
+</body>
+</html>
