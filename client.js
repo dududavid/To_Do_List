@@ -13,6 +13,8 @@ function createTable(data) {
             text += `<tr>`;
             text += `<td>${obj.id}</td>`;
             text += `<td>${obj.text}</td>`;
+            text += `<td><input type="checkbox" ${obj.isDone ? "checked" : ""} 
+            onchange = "toggleTask(${obj.id}, this.checked)"></td>`;
             text += `<td>${obj.isDone}</td>`;
             text += `<td><button onclick="taskById(${obj.id})">✏️</button></td>`;
             text += `<td><button onclick="deleteTask(${obj.id})">🗑️</button></td>`;
@@ -90,6 +92,15 @@ async function editTask(id){
     }
 }
 
-
+async function toggleTask(id, isDone){
+    let res = await fetch(`/tasks/${id}`,{
+        method: 'PATCH',
+        headers: {'Content-type': 'application/json'},
+        body: JSON.stringify({isDone})
+    });
+    if(res.ok){
+        getData();
+    }
+}
 
 getData();
