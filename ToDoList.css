@@ -10,3 +10,6 @@
     text-align: center;
     margin: 0px auto;
 }
+.rowClass{
+    text-decoration: line-through;
+}

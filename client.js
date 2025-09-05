@@ -10,12 +10,14 @@ function createTable(data) {
     let text = "";
     for(obj of data){
         if(obj){
-            text += `<tr>`;
+            let row = obj.isDone ? "rowClass" : "";
+            let check = obj.isDone ? "checked" : "";
+            text += `<tr class='${row}'>`;
             text += `<td>${obj.id}</td>`;
             text += `<td>${obj.text}</td>`;
-            text += `<td><input type="checkbox" ${obj.isDone ? "checked" : ""} 
+            text += `<td><input type="checkbox" onchange="isChecked(this, ${obj.id})" ${obj.isDone ? "checked" : ""} 
             onchange = "toggleTask(${obj.id}, this.checked)"></td>`;
-            text += `<td>${obj.isDone}</td>`;
+            /*text += `<td>${obj.isDone}</td>`;*/
             text += `<td><button onclick="taskById(${obj.id})">✏️</button></td>`;
             text += `<td><button onclick="deleteTask(${obj.id})">🗑️</button></td>`;
             text += `</tr>`
@@ -62,6 +64,20 @@ async function taskById(id){
         document.getElementById('id').value = obj.id;
         document.getElementById('txt').value = obj.text;
 
+    }catch(err){
+        alert(err);
+    }
+}
+
+async function isChecked(element, id){
+    try{
+        let isDone = element.checked;
+        let res = await fetch(`/tasks/${id}`,{
+            method: 'PATCH',
+            headers: {'Content-type': 'application/json'},
+            body: JSON.stringify({isDone})
+        })
+        getData();
     }catch(err){
         alert(err);
     }
