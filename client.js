@@ -1,7 +1,9 @@
+let data = [];
 async function getData(){
-    let res = await fetch('/tasks');
-    let data = await res.json();
-    console.log(data);
+    let res = await fetch('/tasks',{
+    method: 'GET'
+});
+    data = await res.json();
     createTable(data);
 };
 
@@ -116,6 +118,15 @@ async function toggleTask(id, isDone){
     });
     if(res.ok){
         getData();
+    }
+}
+function search(){
+    let val = document.getElementById('search').value;
+    let sorted = data.filter(obj => obj && obj.text.includes(val));
+    if(sorted) {
+        createTable(sorted);
+    }else{
+        createTable(data);
     }
 }
 
